@@ -1,15 +1,18 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Section } from '../sections/section.entity';
 import { Budget } from '../budgets/budget.entity'; 
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class Work {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty({example: 'Elemento', description: 'Texto descriptivo del elemento'})
   @Column({ default: '' })
   description: string;
 
+  @ApiProperty({example: 'Nombre del elemento', description: 'Nombre visualizado en frontal'})
   @Column({ unique: true })
   name: string;
 

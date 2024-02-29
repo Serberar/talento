@@ -1,18 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Work } from './work.entity';
 
 @Injectable()
 export class WorkService {
   constructor(
-    @InjectRepository(Work)
+    @Inject ('WORK_REPOSITORY')
     private readonly workRepository: Repository<Work>,
   ) {}
 
   async findAllWorks(): Promise<Work[]> {
-    console.log('called findAllWorks');
-    
     return this.workRepository.find();
   }
 

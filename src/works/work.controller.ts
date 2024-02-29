@@ -8,7 +8,6 @@ export class WorkController {
 
   @Get()
   async findAll(): Promise<Work[]> {
-    console.log('Se ha llamado a la función findAll');
     return this.workService.findAllWorks();
   }
 
