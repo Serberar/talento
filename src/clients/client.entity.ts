@@ -1,11 +1,13 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Budget } from '../budgets/budget.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class Client {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty({example: 'Cliente Preferente', description: 'Texto descriptivo del cliente'})
   @Column({ default: '' })
   description: string;
 
