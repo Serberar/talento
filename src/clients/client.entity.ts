@@ -11,9 +11,11 @@ export class Client {
   @Column({ default: '' })
   description: string;
 
+  @ApiProperty({example: 'cliente@domain.com', description: 'Correo electrónico del cliente'})
   @Column({ unique: true, nullable: true })
   email: string; 
 
+  @ApiProperty()
   @Column({ default: '' })
   firstName: string;
 

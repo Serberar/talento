@@ -1,12 +1,16 @@
 import { Controller, Get, Post, Patch, Delete, Param, Body, Req, NotFoundException } from '@nestjs/common';
 import { Budget } from './budget.entity';
 import { BudgetService } from './budget.service';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('budgets')
+@ApiTags('Budgets')
 export class BudgetController {
   constructor(private readonly budgetService: BudgetService) {}
 
   @Get()
+  @ApiOperation({ summary: 'Obtiene todos los Presupuestos' })
+  @ApiResponse({status: 200, description: 'Todos los presupuestos encontrados', type: Budget})
   async findAll(): Promise<Budget[]> {
     return this.budgetService.findAllBudgets();
   }

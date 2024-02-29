@@ -1,5 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Budget } from './budget.entity';
 import { Client } from '../clients/client.entity';
@@ -7,10 +6,10 @@ import { Client } from '../clients/client.entity';
 @Injectable()
 export class BudgetService {
   constructor(
-    @InjectRepository(Budget)
-    private readonly budgetRepository: Repository<Budget>,
-    @InjectRepository(Client)
-    private readonly clientRepository: Repository<Client>,
+    @Inject('BUDGET_REPOSITORY') 
+    private budgetRepository: Repository<Budget>,
+    @Inject('CLIENT_REPOSITORY')
+    private clientRepository: Repository<Client>,
   ) {}
 
   async findAllBudgets(): Promise<Budget[]> {

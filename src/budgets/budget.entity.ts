@@ -1,12 +1,14 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 import { Client } from '../clients/client.entity';
 import { Work } from '../works/work.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class Budget {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty({example: '12', description: 'Importe del boletín eléctrico a 12V', default: 0 })
   @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   bulletinE12V: number;
 
