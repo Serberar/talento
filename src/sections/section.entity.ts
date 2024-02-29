@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
-import { Work } from './work.entity';
+import { Work } from '../works/work.entity';
 
 @Entity()
 export class Section {

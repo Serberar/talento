@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Patch, Delete, Param, Body, NotFoundException } from '@nestjs/common';
-import { Work } from '../entities/work.entity';
-import { WorkService } from '../services/work.service';
+import { Work } from './work.entity';
+import { WorkService } from './work.service';
 
 @Controller('works')
 export class WorkController {

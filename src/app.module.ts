@@ -1,13 +1,10 @@
 import { Module, Logger } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm'; 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { WorkController } from './controllers/work.controller';
-import { ClientController } from './controllers/client.controller';
-import { BudgetController } from './controllers/budgets.controller';
-require('dotenv').config();
-
+import { WorksModule } from './works/works.module';
+import { BudgetsModule } from './budgets/budgets.module';
+import { SectionsModule } from './sections/sections.module';
+import { ClientsModule } from './clients/clients.module';
 
 @Module({
   imports: [
@@ -20,15 +17,14 @@ require('dotenv').config();
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
     }),
+    WorksModule,
+    BudgetsModule,
+    SectionsModule,
+    ClientsModule
   ],
   controllers: [
-    AppController, 
-    WorkController, 
-    ClientController, 
-    BudgetController
   ],
   providers: [
-    AppService, 
     Logger,
   ],
 })

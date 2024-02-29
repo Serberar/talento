@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Patch, Delete, Param, Body, Req, NotFoundException } from '@nestjs/common';
-import { Budget } from '../entities/budget.entity';
-import { BudgetService } from '../services/budget.service';
+import { Budget } from './budget.entity';
+import { BudgetService } from './budget.service';
 
 @Controller('budgets')
 export class BudgetController {

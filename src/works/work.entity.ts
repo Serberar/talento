@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { Section } from './section.entity';
-import { Budget } from './budget.entity'; 
+import { Section } from '../sections/section.entity';
+import { Budget } from '../budgets/budget.entity'; 
 
 @Entity()
 export class Work {

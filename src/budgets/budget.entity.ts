@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
-import { Client } from './client.entity';
-import { Work } from './work.entity';
+import { Client } from '../clients/client.entity';
+import { Work } from '../works/work.entity';
 
 @Entity()
 export class Budget {

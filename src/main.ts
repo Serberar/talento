@@ -10,7 +10,10 @@ async function bootstrap() {
     .setTitle('Presupuestos')
     .setDescription('Microservicio de presupuestos')
     .setVersion('1.0')
-    .addTag('Presupuestos')
+    .addTag('Works')
+    .addTag('Budgets')
+    .addTag('Sections')
+    .addTag('Clients')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
