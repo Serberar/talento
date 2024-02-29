@@ -11,6 +11,8 @@ export class WorkService {
   ) {}
 
   async findAllWorks(): Promise<Work[]> {
+    console.log('called findAllWorks');
+    
     return this.workRepository.find();
   }
 

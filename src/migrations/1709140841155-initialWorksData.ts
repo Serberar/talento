@@ -1,11 +1,10 @@
-import { MigrationInterface, QueryRunner } from "typeorm";
-import { Logger } from '@nestjs/common';
-import * as fs from 'fs';
-import * as path from 'path';
+const { MigrationInterface, QueryRunner } = require("typeorm");
+const { Logger } = require('@nestjs/common');
+const fs = require('fs');
+const path = require('path');
 
-export class InitialWorksData1709140841155 implements MigrationInterface {
-
-    public async up(queryRunner: QueryRunner): Promise<void> {
+class InitialWorksData1709140841155 {
+    async up(queryRunner) {
         const logger = new Logger();
 
         // crea la tabla en caso de que no exista
@@ -56,7 +55,7 @@ export class InitialWorksData1709140841155 implements MigrationInterface {
         }
     }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
+    async down(queryRunner) {
         const logger = new Logger();
 
         // verifica si hay trabajos asociados a alguna sección
@@ -80,3 +79,5 @@ export class InitialWorksData1709140841155 implements MigrationInterface {
         logger.log("Datos iniciales revertidos correctamente.");
     }
 }
+
+module.exports = InitialWorksData1709140841155;
