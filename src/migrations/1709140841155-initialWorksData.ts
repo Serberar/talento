@@ -9,7 +9,7 @@ class InitialWorksData1709140841155 {
 
         // crea la tabla en caso de que no exista
         await queryRunner.query(`
-            CREATE TABLE IF NOT EXISTS works (
+            CREATE TABLE IF NOT EXISTS work (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 description VARCHAR(255),
                 name VARCHAR(255),
@@ -46,7 +46,7 @@ class InitialWorksData1709140841155 {
             ).join(', ');
 
             await queryRunner.query(`
-                INSERT INTO works (description, name, price1, price2, price3, price4, priceGapMod, section_description, section_name, section_vehicle)
+                INSERT INTO work (description, name, price1, price2, price3, price4, priceGapMod, section_description, section_name, section_vehicle)
                 VALUES ${values};
             `);
             logger.log("Datos insertados correctamente en la base de datos.");
@@ -60,7 +60,7 @@ class InitialWorksData1709140841155 {
 
         // verifica si hay trabajos asociados a alguna sección
         const hasworks = await queryRunner.query(`
-            SELECT COUNT(*) AS count FROM works WHERE section_name IN (
+            SELECT COUNT(*) AS count FROM work WHERE section_name IN (
                 SELECT DISTINCT section_name FROM works
             )
         `);
@@ -73,8 +73,8 @@ class InitialWorksData1709140841155 {
         }
 
         // si no hay trabajos asociados, elimina todos los registros y la tabla works
-        await queryRunner.query(`DELETE FROM works`);
-        await queryRunner.query(`DROP TABLE IF EXISTS works`);
+        await queryRunner.query(`DELETE FROM work`);
+        await queryRunner.query(`DROP TABLE IF EXISTS work`);
 
         logger.log("Datos iniciales revertidos correctamente.");
     }

@@ -44,10 +44,4 @@ export class Work {
   @ManyToOne(() => Budget, budget => budget.works, { nullable: true }) 
   budget: Budget; 
 
-  // Auditoría
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
-  updatedAt: Date;
 }
