@@ -24,9 +24,11 @@ export class Budget {
   @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   certificate: number;
 
+/*
   @ApiProperty()
   @ManyToOne(() => Client, client => client.budgets, { eager: true, cascade: true })
   client: Client;
+*/
 
   @ApiProperty()
   @Column({ default: '' })
@@ -39,8 +41,9 @@ export class Budget {
   @ApiProperty()
   @Column({ enum: ['all-terrain', 'car', 'motorbike', 'tow-vehicle'] })
   vehicle: string;
-
+/*
   @ApiProperty()
   @OneToMany(() => Work, work => work.budget)
   works: Work[];
+*/
 }

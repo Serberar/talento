@@ -19,8 +19,9 @@ export class Section {
   @Column({ type: 'enum', enum: ['all-terrain', 'car', 'motorbike', 'tow-vehicle'] })
   vehicle: string;
 
+/*
   @ApiProperty()
   @OneToMany(() => Work, work => work.section)
   works: Work[];
-  
+*/
 }

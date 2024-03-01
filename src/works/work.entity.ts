@@ -36,6 +36,7 @@ export class Work {
   @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   priceGapMod: number;
 
+/*
   @ApiProperty()
   @ManyToOne(() => Section, section => section.works, { nullable: true })
   section: Section;
@@ -43,5 +44,5 @@ export class Work {
   @ApiProperty()
   @ManyToOne(() => Budget, budget => budget.works, { nullable: true }) 
   budget: Budget; 
-
+*/
 }

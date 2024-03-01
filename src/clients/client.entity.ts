@@ -31,9 +31,11 @@ export class Client {
   @Column({ enum: ['particular', 'empresa'] })
   type: string;
 
+/*
   @ApiProperty()
   @OneToMany(() => Budget, budget => budget.client)
   budgets: Budget[];
+*/
 
   get name(): string {
     return `${this.firstName} ${this.lastName}`;

@@ -25,6 +25,7 @@ export class BudgetService {
   }
 
   async createBudget(budget: Budget, userId: number): Promise<Budget> {
+/*
     if (!budget.client) {
       throw new NotFoundException('Client information is required');
     }
@@ -38,6 +39,7 @@ export class BudgetService {
     budget.client = client;
     // Set user ID
     budget.user = userId;
+  */
     return this.budgetRepository.save(budget);
   }
 

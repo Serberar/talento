@@ -61,7 +61,7 @@ class InitialWorksData1709140841155 {
         // verifica si hay trabajos asociados a alguna sección
         const hasworks = await queryRunner.query(`
             SELECT COUNT(*) AS count FROM work WHERE section_name IN (
-                SELECT DISTINCT section_name FROM works
+                SELECT DISTINCT section_name FROM work
             )
         `);
 
