@@ -1,7 +1,9 @@
 import { Controller, Get, Post, Patch, Delete, Param, Body, NotFoundException } from '@nestjs/common';
 import { Work } from './work.entity';
 import { WorkService } from './work.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Works')
 @Controller('works')
 export class WorkController {
   constructor(private readonly workService: WorkService) {}

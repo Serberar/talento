@@ -19,15 +19,19 @@ export class Client {
   @Column({ default: '' })
   firstName: string;
 
+  @ApiProperty()
   @Column()
   lastName: string;
 
+  @ApiProperty()
   @Column()
   phone: string;
 
+  @ApiProperty()
   @Column({ enum: ['particular', 'empresa'] })
   type: string;
 
+  @ApiProperty()
   @OneToMany(() => Budget, budget => budget.client)
   budgets: Budget[];
 
