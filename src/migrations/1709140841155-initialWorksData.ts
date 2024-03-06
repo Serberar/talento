@@ -7,7 +7,19 @@ class InitialWorksData1709140841155 {
     async up(queryRunner) {
         const logger = new Logger();
 
-        // crea la tabla en caso de que no exista
+        // ruta al archivo seed
+        const filePath = path.join(__dirname, 'initialWorks.json');
+
+        // crea la tabla si no existe
+        await queryRunner.query(`
+            CREATE TABLE IF NOT EXISTS section (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                description VARCHAR(255),
+                name VARCHAR(255),
+                vehicle VARCHAR(255)
+            )
+        `);
+
         await queryRunner.query(`
             CREATE TABLE IF NOT EXISTS work (
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -18,21 +30,41 @@ class InitialWorksData1709140841155 {
                 price3 DECIMAL,
                 price4 DECIMAL,
                 priceGapMod DECIMAL,
-                section_description VARCHAR(255),
-                section_name VARCHAR(255),
-                section_vehicle VARCHAR(255)
+                sectionId INT,
+                budgetId INT
             )
         `);
 
-        // ruta al archivo seed
-        const filePath = path.join(__dirname, 'initialWorks.json');
+        // Leer el archivo JSON
+        const jsonData = fs.readFileSync(filePath, 'utf-8');
+        const data = JSON.parse(jsonData);
 
         try {
-            // mapea los datos y los inserta en la base 
-            const jsonData = fs.readFileSync(filePath, 'utf-8');
-            const data = JSON.parse(jsonData);
 
-            const values = data.map(entry => `(
+            const sectionIdMap = new Map();
+            let sectionIdCounter = 1;
+
+            // Recorrer los datos y mapear las secciones sin repetición
+            data.forEach(entry => {
+                const sectionKey = `${entry.section.description}_${entry.section.name}_${entry.section.vehicle}`;
+                if (!sectionIdMap.has(sectionKey)) {
+                    sectionIdMap.set(sectionKey, sectionIdCounter++);
+                }
+            });
+
+            // Insertar las secciones en la tabla
+            for (const [sectionKey, sectionId] of sectionIdMap.entries()) {
+                const [description, name, vehicle] = sectionKey.split('_');
+                await queryRunner.query(`
+                    INSERT INTO section (id, description, name, vehicle)
+                    VALUES (${sectionId}, '${description}', '${name}', '${vehicle}')
+                `);
+            }
+
+            logger.log("Secciones cargadas correctamente en la base de datos.");
+
+            // Insertar los trabajos en la tabla work
+            const workValues = data.map(entry => `(
                 '${entry.description}', 
                 '${entry.name}', 
                 ${entry.price1}, 
@@ -40,15 +72,14 @@ class InitialWorksData1709140841155 {
                 ${entry.price3}, 
                 ${entry.price4}, 
                 ${entry.priceGapMod}, 
-                '${entry.section.description}', 
-                '${entry.section.name}', 
-                '${entry.section.vehicle}')`
-            ).join(', ');
+                ${sectionIdMap.get(`${entry.section.description}_${entry.section.name}_${entry.section.vehicle}`)}
+            )`).join(', ');
 
             await queryRunner.query(`
-                INSERT INTO work (description, name, price1, price2, price3, price4, priceGapMod, section_description, section_name, section_vehicle)
-                VALUES ${values};
+                INSERT INTO work (description, name, price1, price2, price3, price4, priceGapMod, sectionId)
+                VALUES ${workValues};
             `);
+
             logger.log("Datos insertados correctamente en la base de datos.");
         } catch (error) {
             logger.error("Error al cargar los datos iniciales:", error);
@@ -58,21 +89,22 @@ class InitialWorksData1709140841155 {
     async down(queryRunner) {
         const logger = new Logger();
 
-        // verifica si hay trabajos asociados a alguna sección
-        const hasworks = await queryRunner.query(`
-            SELECT COUNT(*) AS count FROM work WHERE section_name IN (
-                SELECT DISTINCT section_name FROM work
+        // Verificar si hay trabajos asociados a alguna sección
+        const hasWorks = await queryRunner.query(`
+            SELECT COUNT(*) AS count FROM work WHERE sectionId IN (
+                SELECT DISTINCT sectionId FROM work
             )
         `);
 
-        const worksCount = hasworks[0].count;
+        const worksCount = hasWorks[0].count;
 
         if (worksCount > 0) {
             logger.warn("Hay trabajos asociados a secciones. No se puede revertir la migración.");
             return;
         }
+/*---------------------------------ESTO NO BORRA----------------------------------*/
 
-        // si no hay trabajos asociados, elimina todos los registros y la tabla works
+        // Si no hay trabajos asociados, eliminar todos los registros y la tabla work
         await queryRunner.query(`DELETE FROM work`);
         await queryRunner.query(`DROP TABLE IF EXISTS work`);
 

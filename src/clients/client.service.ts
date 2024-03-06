@@ -11,6 +11,8 @@ export class ClientService {
   ) {}
 
   async findAll(): Promise<Client[]> {
-    return this.clientRepository.find();
+    return this.clientRepository.find({
+      relations: ['budgets']
+    });
   }
 }

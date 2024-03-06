@@ -4,6 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class Client {
+  @ApiProperty({example: '1', description: 'ID del cliente'})
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -15,27 +16,50 @@ export class Client {
   @Column({ unique: true, nullable: true })
   email: string; 
 
-  @ApiProperty()
+  @ApiProperty({example: 'Juan', description: 'Nombre del cliente'})
   @Column({ default: '' })
   firstName: string;
 
-  @ApiProperty()
+  @ApiProperty({example: 'García', description: 'Apellido del cliente'})
   @Column()
   lastName: string;
 
-  @ApiProperty()
+  @ApiProperty({example: '666666666', description: 'Teléfono del cliente'})
   @Column()
   phone: string;
 
-  @ApiProperty()
+  @ApiProperty({example: 'Particular', description: 'Tipo de cliente'})
   @Column({ enum: ['particular', 'empresa'] })
   type: string;
 
-/*
-  @ApiProperty()
+
+  @ApiProperty({
+    example: {
+      "id": 74,
+      "bulletinE12V": 12,
+      "bulletinE230V": 230,
+      "bulletinG": 150,
+      "certificate": 100,
+      "description": "Modelo Opel Astra",
+      "user": 15,
+      "vehicle": "car",
+      "createdAt": "2024-03-06T17:38:56.000Z",
+      "deletedAt": null,
+      "client": {
+        "id": 2,
+        "description": "Cliente preferente",
+        "email": "cliente@domain.com",
+        "firstName": "Juan",
+        "lastName": "García",
+        "phone": "666666666",
+        "type": "particular"
+      }
+    },
+    description: 'Presupuestos asignados a un cliente'
+  })
   @OneToMany(() => Budget, budget => budget.client)
   budgets: Budget[];
-*/
+
 
   get name(): string {
     return `${this.firstName} ${this.lastName}`;
