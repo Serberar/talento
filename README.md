@@ -1,73 +1,49 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Talento · Microservicio de presupuestos (NestJS)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Copia del microservicio de [presupuestos](https://github.com/Serberar/presupuestos): API REST para **gestionar presupuestos de un taller de vehículos** (trabajos por secciones, presupuestos y clientes) con NestJS, TypeORM, MySQL y Swagger. El código es el mismo; esta copia trae además la configuración de ESLint y Prettier.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Recursos
 
-## Description
+| Recurso | Endpoints |
+|---|---|
+| **Works** (trabajos) | `GET /works`, `GET /works/:id`, `GET /works/vehicle/:name`, `POST /works`, `PATCH /works/:id`, `DELETE /works/:id`, `PATCH /works/restore/:id` |
+| **Budgets** (presupuestos) | `GET /budgets`, `GET /budgets/:id`, `GET /budgets/last/:days`, `POST /budgets`, `PATCH /budgets/:id`, `DELETE /budgets/:id`, `PATCH /budgets/restore/:id` |
+| **Clients** | `GET /clients` |
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Trabajos:** cada uno pertenece a una sección (asociada a un tipo de vehículo) y tiene varios precios.
+- **Presupuestos:** agrupan trabajos e importes como boletines eléctricos (12 V y 230 V), boletín de gas y certificado de taller.
+- El borrado es lógico (`deletedAt`): lo borrado se recupera con `PATCH .../restore/:id`.
+- `GET /budgets/last/:days` devuelve los presupuestos de los últimos N días.
+- La migración `src/migrations/1709140841155-initialWorksData.ts` carga los trabajos iniciales desde `initialWorks.json`.
 
-## Installation
+## Documentación interactiva
 
-```bash
-$ npm install
-```
+Con el servidor arrancado, abre **http://localhost:3000/api** para ver y probar los endpoints en Swagger.
 
-## Running the app
+## Cómo arrancarlo
 
-```bash
-# development
-$ npm run start
+1. Ten una base de datos **MySQL** y crea un `.env`:
 
-# watch mode
-$ npm run start:dev
+   ```
+   DB_TYPE=mysql
+   DB_HOST=localhost
+   DB_PORT=3306
+   DB_USERNAME=usuario
+   DB_PASSWORD=contraseña
+   DB_DATABASE=presupuestos
+   ```
 
-# production mode
-$ npm run start:prod
-```
+2. Instala y arranca:
 
-## Test
+   ```bash
+   npm install
+   npm run start:dev
+   ```
 
-```bash
-# unit tests
-$ npm run test
+## Tecnologías
 
-# e2e tests
-$ npm run test:e2e
+NestJS, TypeScript, TypeORM, MySQL y Swagger.
 
-# test coverage
-$ npm run test:cov
-```
+## Autor
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Sergio Bernabé
